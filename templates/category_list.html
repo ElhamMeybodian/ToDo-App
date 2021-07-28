@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Categories{% endblock title %}
+{% block content %}
+    <ul class="list-group">
+        <h1 class="p-3">Category</h1>
+        {% for ctg in object_list %}
+            {% if ctg  not in ctg.list_ctg_no_tasks %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'category_detail' ctg.pk %}">{{ ctg.name }}</a>
+                    <span class="badge badge-primary badge-pill">{{ ctg.num_task_ctg }}</span>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+    <ul class="list-group">
+        <h1 class="p-3">Categorize with no task</h1>
+        {% for ctg in object_list %}
+            {% if ctg in ctg.list_ctg_no_tasks %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <a href="{% url 'category_detail' ctg.pk %}">{{ ctg.name }}</a>
+                    <span class="badge badge-primary badge-pill">{{ ctg.num_task_ctg }}</span>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock content %}

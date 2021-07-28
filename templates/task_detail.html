@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.title }}{% endblock title %}
+
+{% block content %}
+    <br/>
+    <div class="task">
+        <h2>{{ task.capital_title }}</h2>
+        <p>category : {{ object.category }}</p>
+        <p>priority : {{ object.priority }}</p>
+        <p>expired : {{ object.expired }}</p>
+        <p>description : {{ object.description }}</p>
+        <p>deadline : {{ object.tag_deadline}}</p>
+    </div>
+    <p>Back to <a href="{% url 'task_list' %}">All Tasks</a>.</p>
+{% endblock content %}
