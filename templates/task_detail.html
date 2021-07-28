@@ -1,15 +1,17 @@
 {% extends 'base.html' %}
+{% load due_task %}
 {% block title %}{{ object.title }}{% endblock title %}
-
+{% load filter_title %}
 {% block content %}
     <br/>
     <div class="task">
-        <h2>{{ task.capital_title }}</h2>
+        <h2>{{ task.title | capital_title }}</h2>
         <p>category : {{ object.category }}</p>
         <p>priority : {{ object.priority }}</p>
         <p>expired : {{ object.expired }}</p>
         <p>description : {{ object.description }}</p>
-        <p>deadline : {{ object.tag_deadline}}</p>
+        <p>deadline : {% my_tag object.expired %} </p>
     </div>
-    <p>Back to <a href="{% url 'task_list' %}">All Tasks</a>.</p>
+    <a class="btn btn-primary " href="{% url 'task_update' task.pk %}" role="button">Edit Task</a>
+    <a class="btn btn-primary " href="{% url 'task_list' %}" role="button">All Tasks</a>
 {% endblock content %}

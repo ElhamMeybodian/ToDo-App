@@ -69,10 +69,10 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse('task_detail', args=[str(self.id)])
 
-    def capital_title(self):
-        self.title = self.title[0].capitalize() + self.title[1:]
-        self.save()
-        return self.title
+    # def capital_title(self):
+    #     self.title = self.title[0].capitalize() + self.title[1:]
+    #     self.save()
+    #     return self.title
 
-    def tag_deadline(self):
-        return self.expired - timezone.now()
+    # def due_task(self):
+    #     return self.expired - timezone.now()

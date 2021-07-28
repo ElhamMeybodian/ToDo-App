@@ -1,5 +1,5 @@
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from .models import Task, Category
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -7,7 +7,7 @@ from .serializers import TaskSerializers
 
 
 # Create your views here.
-
+# task view
 class TaskListView(ListView):
     model = Task
     template_name = 'task_list.html'
@@ -24,6 +24,20 @@ class TaskCreateView(CreateView):
     fields = '__all__'
 
 
+class TaskUpdateView(UpdateView):
+    model = Task
+    fields = '__all__'
+    template_name = 'task_update.html'
+
+
+
+class TaskView(APIView):
+    def get(self, request, *args, **kwargs):
+        serializer = [TaskSerializers(task).data for task in Task.objects.all()]
+        return Response({'task': serializer})
+
+
+# category view
 class CategoryListView(ListView):
     model = Category
     template_name = 'category_list.html'
@@ -34,7 +48,7 @@ class CategoryDetailView(DetailView):
     template_name = 'category_detail.html'
 
 
-class TaskView(APIView):
-    def get(self, request, *args, **kwargs):
-        serializer = [TaskSerializers(task).data for task in Task.objects.all()]
-        return Response({'task': serializer})
+class CategoryCreateView(CreateView):
+    model = Category
+    template_name = 'category_new.html'
+    fields = '__all__'

@@ -1,16 +1,22 @@
 {% extends 'base.html' %}
 {% block title %}Tasks{% endblock title %}
+{% load filter_title %}
+
 {% block content %}
+
     <br/>
     {% for task in object_list %}
         <div class="card">
             <div class="card-header">
-                <span class="font-weight-bold"><a href="{% url 'task_detail' task.pk %}" class="data">{{ task.capital_title }}</a></span>
+                <span class="font-weight-bold"><a href="{% url 'task_detail' task.pk %}"
+                                                  class="data">{{ task.title | capital_title }}<br></a></span>
                 <span class="text-muted">{{ task.category }} |
-                {{ task.expired }}</span>
+                    {{ task.expired }}</span>
             </div>
         </div>
-        <br />
+        <br/>
     {% endfor %}
-    <a href="{% url 'task' %}" class="data"><button class="btn btn-primary ml-2" type="submit" id="button-addon">View All Task by Format Json</button></a>
+    <a href="{% url 'task' %}" class="data">
+        <button class="btn btn-primary ml-2" type="submit" id="button-addon">View All Task by Format Json</button>
+    </a>
 {% endblock content %}
