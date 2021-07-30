@@ -30,11 +30,11 @@ class TaskUpdateView(UpdateView):
     template_name = 'task_update.html'
 
 
-
 class TaskView(APIView):
     def get(self, request, *args, **kwargs):
-        serializer = [TaskSerializers(task).data for task in Task.objects.all()]
-        return Response({'task': serializer})
+        # serializer = [TaskSerializers(task).data for task in Task.objects.all()]
+        serializer = TaskSerializers(Task.objects.all(), many=True)
+        return Response({'task': serializer.data})
 
 
 # category view

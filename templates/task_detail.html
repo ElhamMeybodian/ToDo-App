@@ -1,12 +1,17 @@
 {% extends 'base.html' %}
-{% load due_task %}
+{% load remaining_time %}
 {% block title %}{{ object.title }}{% endblock title %}
 {% load filter_title %}
 {% block content %}
     <br/>
     <div class="task">
         <h2>{{ task.title | capital_title }}</h2>
-        <p>category : {{ object.category }}</p>
+        <p>category :
+            {% for ctg in object.set_category%}
+                {{ ctg }} |
+            {% endfor %}
+        </p>
+
         <p>priority : {{ object.priority }}</p>
         <p>expired : {{ object.expired }}</p>
         <p>description : {{ object.description }}</p>

@@ -5,12 +5,11 @@ from django.utils import timezone
 
 class CategoryManger(models.Manager):
     def with_counts(self):
-        return self.annotate(
-            num_task=models.Count("task")).filter(num_task=0)
+        return self.annotate(num_task=models.Count("task")).filter(num_task=0)
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=30, default='None')
+    name = models.CharField(max_length=30, default='None', unique=True)
     objects = models.Manager()  # The default manager
     tasks = CategoryManger()  # Our custom manager
 
@@ -55,7 +54,8 @@ class Task(models.Model):
     ]
     title = models.CharField('title', max_length=30)
     description = models.TextField(max_length=500)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category)
+    # category = models.ForeignKey(Category, on_delete=models.CASCADE)
     priority = models.IntegerField(choices=PRIORITY_TASK, default=0)
     expired = models.DateTimeField(blank=True, null=True, default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -69,10 +69,9 @@ class Task(models.Model):
     def get_absolute_url(self):
         return reverse('task_detail', args=[str(self.id)])
 
-    # def capital_title(self):
-    #     self.title = self.title[0].capitalize() + self.title[1:]
-    #     self.save()
-    #     return self.title
+    @staticmethod
+    def due_task():
+        return Task.expire_task.get_queryset()
 
-    # def due_task(self):
-    #     return self.expired - timezone.now()
+    def set_category(self):
+        return self.category.all()

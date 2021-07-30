@@ -67,7 +67,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             'builtins':[
-                'todo.templatetags.due_task','todo.templatetags.filter_title'
+                'todo.templatetags.remaining_time','todo.templatetags.filter_title'
             ],
         },
     },
